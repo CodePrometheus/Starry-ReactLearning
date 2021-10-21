@@ -1,6 +1,32 @@
 import React from "react";
-import { appContext, connect, store } from "./redux.jsx";
+import { connect, createStore, Provider } from "./redux.jsx";
 import { connectToCount } from "./connecters/connectToCount";
+
+const reducer = (state, { type, payload }) => {
+  if (type === "updateCount") {
+    return {
+      ...state,
+      count: {
+        ...state.count,
+        ...payload,
+      },
+    };
+  } else {
+    return state;
+  }
+};
+
+const initState = {
+  count: {
+    name: "starry",
+    data: 10,
+  },
+  group: {
+    name: "react",
+  },
+};
+
+const store = createStore(reducer, initState);
 
 const Header = () => {
   console.log("Header执行: " + Math.random());
@@ -39,26 +65,57 @@ const Count = connectToCount(({ count }) => {
   return <div>Count: {count.name}</div>;
 });
 
-const CountModify = connectToCount(({ updateCount, count }) => {
+const ajax = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: {
+          name: "2s to res",
+        },
+      });
+    }, 2000);
+  });
+};
+
+const fetchCount = (dispatch) => {
+  ajax("/count").then((response) => {
+    dispatch({
+      type: 'updateCount',
+      payload: response.data
+    })
+  });
+};
+
+const fetchCountPromise = () => {
+  return ajax("/count").then((response) => response.data);
+};
+
+const CountModify = connect(
+  null,
+  null
+)(({ state, dispatch }) => {
   console.log("CountModify执行: " + Math.random());
-  const onChange = (e) => {
-    updateCount({
-      name: e.target.value,
+  const onClick = () => {
+    // dispatch(fetchCount)
+    dispatch({
+      type: "updateCount",
+      payload: fetchCountPromise(),
     });
   };
   return (
     <div>
-      <input value={count.name} onChange={onChange} />
+      Count: {state.count.name}
+      <button onClick={onClick}>异步获取 Count</button>
     </div>
   );
 });
 
 export const App = () => {
   return (
-    <appContext.Provider value={store}>
+    <Provider store={store}>
       <Header />
       <Main />
       <Footer />
-    </appContext.Provider>
+    </Provider>
   );
 };
