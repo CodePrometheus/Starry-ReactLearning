@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-export default class Count extends Component {
+export default class CountBefore extends Component {
   state = { count: 0 };
 
   inc = () => {

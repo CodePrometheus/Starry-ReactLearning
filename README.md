@@ -10,6 +10,8 @@ React + Vite + Eslint + Prettier 模板
 
 Redux 学习
 
+![img.png](images/img.png)
+
 ## redux-handwriting
 
 Redux 手写

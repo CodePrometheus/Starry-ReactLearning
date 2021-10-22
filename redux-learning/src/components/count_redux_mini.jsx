@@ -2,8 +2,6 @@ import store from "../redux/store";
 import { Component } from "react";
 
 export default class CountMini extends Component {
-  state = { carName: "AE86" };
-
   increment = () => {
     const { value } = this.selectNumber;
     store.dispatch({ type: "inc", data: Number(value) });

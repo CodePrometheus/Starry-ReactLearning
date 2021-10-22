@@ -1,10 +1,13 @@
 import "./App.css";
-import CountMini from "./components/count_redux_mini";
+import Count from "./containers/Count";
+import Person from "./containers/Person";
 
 function App() {
   return (
     <div>
-      <CountMini />
+      <Count />
+      <hr />
+      <Person />
     </div>
   );
 }
