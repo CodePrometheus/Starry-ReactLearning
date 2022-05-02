@@ -1,0 +1,7 @@
+{
+  "name": "react-from-scratch",
+  "devDependencies": {
+    "parcel": "^2.5.0",
+    "typescript": "^4.6.4"
+  }
+}
